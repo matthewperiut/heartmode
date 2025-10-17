@@ -1,17 +1,29 @@
-[gd_scene load_steps=8 format=3 uid="uid://dp2jmmej7em40"]
+[gd_scene load_steps=13 format=3 uid="uid://dp2jmmej7em40"]
 
+[ext_resource type="Script" uid="uid://co16rru8rtn3i" path="res://scripts/ui/interface.gd" id="1_pr3t4"]
 [ext_resource type="Script" uid="uid://busmwhe06huhd" path="res://scenes/buttons_positioner.gd" id="1_uidac"]
 [ext_resource type="Texture2D" uid="uid://bpdkyah4fcxq1" path="res://icons/heart.svg" id="2_mfcci"]
 [ext_resource type="Script" uid="uid://bwnno1ip44h0g" path="res://scripts/animations/heart.gd" id="3_mfcci"]
 [ext_resource type="FontFile" uid="uid://bo62vsk07322g" path="res://fonts/tiktoksansbold.ttf" id="3_pr3t4"]
 [ext_resource type="Texture2D" uid="uid://0ns2cwlb5mwp" path="res://icons/comment.svg" id="4_t62tn"]
 [ext_resource type="Texture2D" uid="uid://dx87t2vo1pa8l" path="res://icons/favorite.svg" id="5_vceqh"]
+[ext_resource type="Shader" uid="uid://bu7pglli4iqsj" path="res://scripts/shaders/rounded_top_bg.gdshader" id="8_t62tn"]
+[ext_resource type="Script" uid="uid://cl7e1o6dugn14" path="res://scripts/ui/comment_shelf.gd" id="8_vceqh"]
 
 [sub_resource type="Theme" id="Theme_5tchh"]
 default_font = ExtResource("3_pr3t4")
 default_font_size = 32
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vceqh"]
+shader = ExtResource("8_t62tn")
+shader_parameter/use_white = true
+shader_parameter/corner_radius = 20.0
+shader_parameter/rect_size = Vector2(100, 100)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_t62tn"]
+
 [node name="Interface" type="Node2D"]
+script = ExtResource("1_pr3t4")
 
 [node name="Buttons" type="Node2D" parent="."]
 script = ExtResource("1_uidac")
@@ -126,8 +138,15 @@ metadata/_edit_use_anchors_ = true
 texture = ExtResource("5_vceqh")
 
 [node name="CommentShelf" type="Node2D" parent="."]
+script = ExtResource("8_vceqh")
+
+[node name="bg" type="Sprite2D" parent="CommentShelf"]
+material = SubResource("ShaderMaterial_vceqh")
+scale = Vector2(456.25, 472.25003)
+texture = SubResource("CanvasTexture_t62tn")
 
 [connection signal="button_down" from="Buttons/Like/Button" to="Buttons/Like/Heart" method="_on_button_button_down"]
 [connection signal="pressed" from="Buttons/Like/Button" to="Buttons" method="_on_button_pressed"]
 [connection signal="pressed" from="Buttons/Comment/Button" to="Buttons" method="_on_button_pressed"]
+[connection signal="pressed" from="Buttons/Comment/Button" to="Buttons" method="_on_comment_pressed"]
 [connection signal="pressed" from="Buttons/Favorite/Button" to="Buttons" method="_on_button_pressed"]

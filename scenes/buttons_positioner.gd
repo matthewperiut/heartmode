@@ -37,3 +37,7 @@ func _on_button_pressed() -> void:
 	set_like_ct(likes + 1 if $"Like/Button".button_pressed else 0)
 	set_favorite_ct(favorites + 1 if $"Favorite/Button".button_pressed else 0)
 	pass # Replace with function body.
+	
+func _on_comment_pressed() -> void:
+	$"../CommentShelf".moving = not $"../CommentShelf".moving
+	$"../CommentShelf".up = not $"../CommentShelf".up
